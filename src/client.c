@@ -34,11 +34,10 @@ int sendEncrypted(int message struct in_addr server_addr) {
 	}
 	close(sockD);
 	return 0;
-
 }
 
 int main(int argv, char **argc) {
-	int message = atoi(argc[1]);
+	int message = atoi(AF_INET, argc[1]);
 	struct in_addr server_addr = inet_pton(argc[2]);
 	int result = sendEncrypted(message, server_addr);
 	return result;
