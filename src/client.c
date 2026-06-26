@@ -13,8 +13,8 @@ int sendEncrypted(int message struct in_addr server_addr) {
 	msg = iVencrypt(prime, generator, public, message);
 
 	int sockD = socket(AF_INET, SOCK_STREAM, 0);
-	msg[0] = htonll(msg[0]);
-	msg[1] = htonll(msg[1]);
+	msg[0] = htonl(msg[0]);
+	msg[1] = htonl(msg[1]);
 
 	struct sockaddr_in serv_addr;
 

@@ -1,7 +1,7 @@
 # TeleType Layer Security
 
-Here is my very basic---and likely a bit insecure---implimentation of tls
-protocal, which I am indending to use with my other project, in which my freind
+Here is my very basic---and likely a bit insecure---implementation of tls
+protocol, which I am intending to use with my other project, in which my friend
 and I build typewriter consoles for some reason. The goal of this project is
 not security, (though there will be some) but rather it is just because I want
 a minimum barrier to just using up all the paper in the typewriters. If you
