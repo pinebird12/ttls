@@ -12,9 +12,10 @@ unsigned long long int awaitDecrypt() {
 						// uses 5 as a generator
 	unsigned long long int prime = 2 * 32771 + 1;
 
-
-
 	int servSock = socket(AF_INET, SOCK_STREAM, 0);
+
+        int opt = 1;
+        setsockopt(servSock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
 	struct sockaddr_in serv_addr;
 

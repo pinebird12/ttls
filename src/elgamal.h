@@ -12,7 +12,7 @@
 
 
 /*
- * Integer modulo exponentiation function *
+ * Integer modulo exponentiation function
  * Much faster for modulo exponentiation than otherwise
  */
 unsigned long long int mod_power(unsigned long long int base, unsigned long
