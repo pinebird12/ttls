@@ -63,7 +63,9 @@ unsigned long long int* generate_key(unsigned long long int prime, unsigned
 		long long int gen) {
 	unsigned long long int private = 0;
 	unsigned long long int public = 0;
-	srand(time(NULL));
+	srand(time(NULL)); // FIXME: Use a more secure random number generation...
+    // Not that important really since this is only run once to make a keypair,
+    // and thus unlikely to be time 
 	while ((private == public) || (public == gen)) { // Another loop
 							 // unlikely to run
 							 // more than once on
