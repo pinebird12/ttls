@@ -6,6 +6,7 @@
 #include "elgamal.h"
 
 int sendEncrypted(int message, struct in_addr server_addr) {
+
 	unsigned long long int public = 49273;
 	unsigned long long int generator = 5;
 	unsigned long long int prime = 2 * 32771 + 1;
@@ -14,8 +15,8 @@ int sendEncrypted(int message, struct in_addr server_addr) {
 
         // open a socket on which to send the message
 	int sockD = socket(AF_INET, SOCK_STREAM, 0);
-	msg[0] = htonl(msg[0]);
-	msg[1] = htonl(msg[1]);
+	msg[0] = htonll(msg[0]);
+	msg[1] = htonll(msg[1]);
 
 	struct sockaddr_in serv_addr;
 
@@ -37,6 +38,7 @@ int sendEncrypted(int message, struct in_addr server_addr) {
 		free(msg);
 	}
         // FIXME: In final version should wait to close the socket
+        // Until it is clear that the message is done
 	close(sockD);
 	return 0;
 }

@@ -8,3 +8,5 @@ a minimum barrier to just using up all the paper in the typewriters. If you
 hack this I suppose you are welcome to use them... Perhaps just print out
 documentation of how you did if you do, I'd be curious to know.
 
+## Data encoding
+Uniform will have roughly similar hamming distance from any two samples... as well as similar number of 1's and 0's 

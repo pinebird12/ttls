@@ -14,24 +14,17 @@ unsigned long long int awaitDecrypt() {
 
 	int servSock = socket(AF_INET, SOCK_STREAM, 0);
 
-        // Ensure that the socket will keep open for the server to reuse it
+        // Ensure that the socket will stay open for the server to reuse it
         int opt = 1;
         setsockopt(servSock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
         // Setup input address
 	struct sockaddr_in serv_addr;
 
-        // Setup ip address to listen on, so input ends up here
-	char char_addr[] = "127.0.0.1";
-	struct in_addr loop_adress;
-	inet_pton(AF_INET, char_addr, &loop_adress);
-
         // Bind socket to listen to the hostname ip address
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(8888);
-        serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	// serv_addr.sin_addr = loop_adress;
-
+        serv_addr.sin_addr.s_addr = htonll(INADDR_ANY);
 	bind(servSock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
 
 	listen(servSock, 1);
@@ -41,7 +34,7 @@ unsigned long long int awaitDecrypt() {
 	unsigned long long int msg[2];
 	recv(clientSocket, (char*)msg, 2 * sizeof(unsigned long long int), 0);
         // Decrypt input message
-	unsigned long long int cypher[2] = {ntohl(msg[0]), htonl(msg[1])};
+	unsigned long long int cypher[2] = {ntohll(msg[0]), htonll(msg[1])};
 	unsigned long long int out = decrypt(prime, private, cypher);
 	close(clientSocket);
 	close(servSock);
