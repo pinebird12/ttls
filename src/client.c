@@ -22,8 +22,8 @@ int sendEncrypted(int message, struct in_addr server_addr) {
     msg = iVencrypt(prime, generator, public, message);
 
     // open a socket on which to send the message
-    msg[0] = htonll(msg[0]);
-    msg[1] = htonll(msg[1]);
+    msg[0] = htonl(msg[0]);
+    msg[1] = htonl(msg[1]);
 
     struct sockaddr_in serv_addr;
 
