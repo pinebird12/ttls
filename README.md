@@ -9,4 +9,13 @@ hack this I suppose you are welcome to use them... Perhaps just print out
 documentation of how you did if you do, I'd be curious to know.
 
 ## Data encoding
-Uniform will have roughly similar hamming distance from any two samples... as well as similar number of 1's and 0's 
+Uniform will have roughly similar hamming distance from any two samples... as
+well as similar number of 1's and 0's 
+
+# Protocol
+1. Client establishes connection, requests public key
+2. Server replies with key, requests client authentication key
+3. Client sends auth key
+4. Server acknowledge, sends status of printer
+5. Client sends message
+6. Server closes connection

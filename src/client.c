@@ -15,17 +15,15 @@
  * @param server_addr Server destination IP address
  */
 int sendEncrypted(int message, struct in_addr server_addr) {
+    unsigned long long int public = 49273;
+    unsigned long long int generator = 5;
+    unsigned long long int prime = 2 * 32771 + 1;
+    unsigned long long int* msg;
+    msg = iVencrypt(prime, generator, public, message);
 
-	unsigned long long int public = 49273;
-	unsigned long long int generator = 5;
-	unsigned long long int prime = 2 * 32771 + 1;
-	unsigned long long int* msg;
-	msg = iVencrypt(prime, generator, public, message);
-
-        // open a socket on which to send the message
-	int sockD = socket(AF_INET, SOCK_STREAM, 0);
-	msg[0] = htonll(msg[0]);
-	msg[1] = htonll(msg[1]);
+    // open a socket on which to send the message
+    msg[0] = htonll(msg[0]);
+    msg[1] = htonll(msg[1]);
 
     struct sockaddr_in serv_addr;
 
