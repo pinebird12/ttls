@@ -34,23 +34,23 @@ unsigned long long int awaitDecrypt() {
     // Setup input address
     struct sockaddr_in serv_addr;
 
-        // Bind socket to listen to the hostname ip address
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(8888);
-        serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	bind(servSock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+    // Bind socket to listen to the hostname ip address
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(8888);
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    bind(servSock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
 
     listen(servSock, 1);
 
     int clientSocket = accept(servSock, NULL, NULL);
 
-	unsigned long long int msg[2];
-	recv(clientSocket, (char*)msg, 2 * sizeof(unsigned long long int), 0);
-        // Decrypt input message
-	unsigned long long int cypher[2] = {ntohl(msg[0]), htonl(msg[1])};
-	unsigned long long int out = decrypt(prime, private, cypher);
-	close(clientSocket);
-	close(servSock);
+    unsigned long long int msg[2];
+    recv(clientSocket, (char*)msg, 2 * sizeof(unsigned long long int), 0);
+    // Decrypt input message
+    unsigned long long int cypher[2] = {ntohl(msg[0]), htonl(msg[1])};
+    unsigned long long int out = decrypt(prime, private, cypher);
+    close(clientSocket);
+    close(servSock);
 
     return out;
 }
