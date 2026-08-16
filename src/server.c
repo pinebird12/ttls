@@ -37,7 +37,7 @@ unsigned long long int awaitDecrypt() {
         // Bind socket to listen to the hostname ip address
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(8888);
-        serv_addr.sin_addr.s_addr = htonll(INADDR_ANY);
+        serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	bind(servSock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
 
     listen(servSock, 1);
@@ -47,7 +47,7 @@ unsigned long long int awaitDecrypt() {
 	unsigned long long int msg[2];
 	recv(clientSocket, (char*)msg, 2 * sizeof(unsigned long long int), 0);
         // Decrypt input message
-	unsigned long long int cypher[2] = {ntohll(msg[0]), htonll(msg[1])};
+	unsigned long long int cypher[2] = {ntohll(msg[0]), htonl(msg[1])};
 	unsigned long long int out = decrypt(prime, private, cypher);
 	close(clientSocket);
 	close(servSock);
