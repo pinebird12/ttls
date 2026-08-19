@@ -30,7 +30,7 @@ int sendEncrypted(int message, struct in_addr server_addr) {
     int sockD = makeSocket(server_addr, 8888);
 
     // send message
-    send(sockD, msg, 2 *  sizeof(unsigned long long int), 0);
+    send(sockD, msg, 2 * sizeof(unsigned long long int), 0);
     free(msg);
     close(sockD);
     return 0;

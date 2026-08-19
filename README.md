@@ -9,8 +9,10 @@ hack this I suppose you are welcome to use them... Perhaps just print out
 documentation of how you did if you do, I'd be curious to know.
 
 ## Data encoding
-Uniform will have roughly similar hamming distance from any two samples... as
-well as similar number of 1's and 0's 
+Encoding is designed to follow a uniform distribution for bit assignment over
+each character, with redundant bits noting the hamming distance between two
+messages. This distance then is sampled from a binomial distribution with
+$p=\frac{1}{2}$.
 
 # Protocol
 1. Client establishes connection, requests public key

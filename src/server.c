@@ -47,7 +47,7 @@ unsigned long long int awaitDecrypt() {
     unsigned long long int msg[2];
     recv(clientSocket, (char*)msg, 2 * sizeof(unsigned long long int), 0);
     // Decrypt input message
-    unsigned long long int cypher[2] = {ntohl(msg[0]), htonl(msg[1])};
+    unsigned long long int cypher[2] = {ntohl(msg[0]), ntohl(msg[1])};
     unsigned long long int out = decrypt(prime, private, cypher);
     close(clientSocket);
     close(servSock);
