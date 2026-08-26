@@ -24,9 +24,7 @@ int sendEncrypted(int message, struct in_addr server_addr) {
     // open a socket on which to send the message
     msg[0] = htonl(msg[0]);
     msg[1] = htonl(msg[1]);
-
     struct sockaddr_in serv_addr;
-
     int sockD = makeSocket(server_addr, 8888);
 
     // send message

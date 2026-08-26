@@ -17,7 +17,8 @@
  * Integer modulo exponentiation function
  * Much faster for modulo exponentiation than otherwise
  */
-unsigned long long int mod_power(unsigned long long int base, unsigned long
+unsigned long long int mod_power(unsigned long long int base,
+unsigned long
         long int expon, unsigned long long int p) {
     unsigned long long int result = 1;
     while (expon > 0) {
@@ -35,7 +36,8 @@ unsigned long long int mod_power(unsigned long long int base, unsigned long
 /*
  * Functinon to find genorators from a prime number
  */
-unsigned long long int find_gen(unsigned long long int p, unsigned long long int q) {
+unsigned long long int find_gen(unsigned long long int p,
+unsigned long long int q) {
     for (int i = 2; i < p; i++) {
         if (mod_power(i, 2, p) != 1 && mod_power(i, q, p) != 1) {
             return i;
@@ -58,7 +60,8 @@ unsigned long long int mod_inv(unsigned long long int elem, unsigned long long i
 }
 
 /*
- * Randomly generates a public private key pair from a prime and a generator
+ * Randomly generates a public private key pair from a prime and
+ * a generator
  */
 unsigned long long int* generate_key(unsigned long long int prime, unsigned long long int gen) {
     unsigned long long int private = 0;
