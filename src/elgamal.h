@@ -2,9 +2,6 @@
  * Implimentation of elgamal encryption and decription
  * functions, including some extra utility functions for those
  * computations
- *
- * TODO Impliment seeding... or get a better random number
- * generator
  */
 # include <stdlib.h>
 # include <time.h>
@@ -66,11 +63,7 @@ unsigned long long int mod_inv(unsigned long long int elem, unsigned long long i
 unsigned long long int* generate_key(unsigned long long int prime, unsigned long long int gen) {
     unsigned long long int private = 0;
     unsigned long long int public = 0;
-    srand(time(NULL)); // FIXME: Use a more secure random number
-                       // generation...  Not that important
-                       // really since this is only run once to
-                       // make a keypair, and thus unlikely to
-                       // be the same 
+    srand(time(NULL));
     while ((private == public) || (public == gen)) { // Another loop
                                                      // unlikely to run
                                                      // more than once on
