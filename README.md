@@ -21,3 +21,12 @@ $p=\frac{1}{2}$.
 4. Server acknowledge, sends status of printer
 5. Client sends message
 6. Server closes connection
+
+
+# File gathering
+## Ignore:
+- .ipynb
+- .json
+-  .DS_stor
+- .git
+

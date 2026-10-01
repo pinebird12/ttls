@@ -13,6 +13,7 @@
  * keystrokes
  *
  */
+#include <stdbool.h>
 
 /*
  * Session struct to store socket and session cryptography info
@@ -22,7 +23,7 @@ struct Session {
     unsigned long long int public;
     unsigned long long int generator;
     unsigned long long int prime;
-}
+};
 
 
 /* TODO
@@ -91,9 +92,10 @@ int makeSocket(struct in_addr server_addr, int port) {
  * @param port Port number to open socket on
  * @return status Status code indicating success or failure
  */
-int clientHandshake(struct server_addr, struct session, int port) {
+int clientHandshake(struct in_addr server_addr, struct Session session, int port) {
     int socket = makeSocket(server_addr, port);
     session.socket = socket;
+    return 1; // TODO
 }
 
 
@@ -139,7 +141,7 @@ int serverHandshake(int port) {
     }
     // Request wishes to open communication, send back a
     // public key, generator, and prime
-    unsigned long long int* keypair[2];
+    unsigned long long int* keypair;
     keypair = generate_key(2 * 32771 + 1, 5);
     unsigned long long int public  = keypair[0];
     int private = keypair[1];
