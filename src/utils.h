@@ -14,23 +14,15 @@
  *
  */
 #include <stdbool.h>
-#include <string.h>
-#include <stdint.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include "elgamal.h"
 
 /*
  * Session struct to store socket and session cryptography info
  */
 struct Session {
     int socket;
-    uint64_t public;
-    uint64_t generator;
-    uint64_t prime;
+    unsigned long long int public;
+    unsigned long long int generator;
+    unsigned long long int prime;
 };
 
 
@@ -54,7 +46,7 @@ int combineSockets(int client, int server) {
  * Checks if the cypher key is a valid one in the database
  * TODO
  */
-bool checkKey(uint64_t key) {
+bool checkKey(unsigned long long int key) {
     // FIXME: Impliment
     return true;
 }
@@ -117,7 +109,7 @@ int clientHandshake(struct in_addr server_addr, struct Session session, int port
  * won and math is god.
  */
 int serverHandshake(int port) {
-    uint64_t prime = 2 * 32771 + 1;
+    unsigned long long int prime = 2 * 32771 + 1;
     int generator = 5;
 
     int servSock = socket(AF_INET, SOCK_STREAM, 0);
@@ -149,14 +141,16 @@ int serverHandshake(int port) {
     }
     // Request wishes to open communication, send back a
     // public key, generator, and prime
-    uint64_t* keypair;
+    unsigned long long int* keypair;
     keypair = generate_key(2 * 32771 + 1, 5);
-    uint64_t public  = keypair[0];
+    unsigned long long int public  = keypair[0];
     int private = keypair[1];
-    uint64_t netPub = htonl(public);
-    send(clientSocket, (char*)netPub, sizeof(uint64_t), 0);
-    uint64_t netPrime = htonl(prime);
-    send(clientSocket, (char*)netPrime, sizeof(uint64_t), 0);
+    unsigned long long int netPub = htonl(public);
+    send(clientSocket, (char*)netPub, sizeof(unsigned long long
+                int), 0);
+    unsigned long long int netPrime = htonl(prime);
+    send(clientSocket, (char*)netPrime, sizeof(unsigned long long
+                int), 0);
     int netGen = htonl(generator);
     send(clientSocket, (char*)netGen, sizeof(int), 0);
 
@@ -169,11 +163,12 @@ int serverHandshake(int port) {
 
     // If Client suceesfully gets message, await new key message
     // for authentication
-    uint64_t cypher_key[2];
-    recv(clientSocket, (char*)cypher_key, 2 * sizeof(uint64_t), 0);
+    unsigned long long int cypher_key[2];
+    recv(clientSocket, (char*)cypher_key, 2 * sizeof(unsigned long long
+                int), 0);
     cypher_key[0] = ntohl(cypher_key[0]);
     cypher_key[1] = ntohl(cypher_key[1]);
-    uint64_t key = decrypt(prime, private,
+    unsigned long long int key = decrypt(prime, private,
             cypher_key);
     int validKey = checkKey(key);
     if (!validKey) {
@@ -181,32 +176,5 @@ int serverHandshake(int port) {
     }
     int out = combineSockets(clientSocket, servSock);
     return out;
-}
-
-uint64_t str_to_int(char* string) {
-    uint64_t bits = 0;
-    for (size_t i = 0; string[i]; i++) {
-        bits = (bits << 8) | (unsigned char)string[i];
-    }
-    return bits;
-}
-
-char* int_to_str(uint64_t msg) {
-    int index = 0;
-    char *string = malloc(64);
-    while (msg > 0 && index < 63) {
-        unsigned char byte = msg & 0xFF;
-        string[index++] = (char)byte;
-        msg >>=8;
-    }
-
-   string[index] = '\0';
-
-    for (int i = 0; i < index / 2; i++) {
-        char tmp = string[i];
-        string[i] = string[index - 1 - i];
-        string[index - 1 - i] = tmp;
-    }
-    return string;
 }
 
