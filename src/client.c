@@ -1,9 +1,3 @@
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include "elgamal.h"
 #include "utils.h"
 
 
@@ -15,10 +9,10 @@
  * @param server_addr Server destination IP address
  */
 int sendEncrypted(int message, struct in_addr server_addr) {
-    unsigned long long int public = 49273;
-    unsigned long long int generator = 5;
-    unsigned long long int prime = 2 * 32771 + 1;
-    unsigned long long int* msg;
+    uint64_t public = 49273;
+    uint64_t generator = 5;
+    uint64_t prime = 2 * 32771 + 1;
+    uint64_t* msg;
     msg = iVencrypt(prime, generator, public, message);
 
     // open a socket on which to send the message
@@ -28,7 +22,7 @@ int sendEncrypted(int message, struct in_addr server_addr) {
     int sockD = makeSocket(server_addr, 8888);
 
     // send message
-    send(sockD, msg, 2 * sizeof(unsigned long long int), 0);
+    send(sockD, msg, 2 * sizeof(uint64_t), 0);
     free(msg);
     close(sockD);
     return 0;

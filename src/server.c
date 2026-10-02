@@ -1,9 +1,3 @@
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include "elgamal.h"
 #include "utils.h"
 
 
@@ -17,12 +11,12 @@
  * transmission is marked as complete, rather than after every
  * message
  */
-unsigned long long int awaitDecrypt() {
+uint64_t awaitDecrypt() {
 
-    unsigned long long int private = 16809; // private key
+    uint64_t private = 16809; // private key
                                             // public is: 49273
                                             // uses 5 as a generator
-    unsigned long long int prime = 2 * 32771 + 1;
+    uint64_t prime = 2 * 32771 + 1;
 
     int servSock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -44,11 +38,11 @@ unsigned long long int awaitDecrypt() {
 
     int clientSocket = accept(servSock, NULL, NULL);
 
-    unsigned long long int msg[2];
-    recv(clientSocket, (char*)msg, 2 * sizeof(unsigned long long int), 0);
+    uint64_t msg[2];
+    recv(clientSocket, (char*)msg, 2 * sizeof(uint64_t), 0);
     // Decrypt input message
-    unsigned long long int cypher[2] = {ntohl(msg[0]), ntohl(msg[1])};
-    unsigned long long int out = decrypt(prime, private, cypher);
+    uint64_t cypher[2] = {ntohl(msg[0]), ntohl(msg[1])};
+    uint64_t out = decrypt(prime, private, cypher);
     close(clientSocket);
     close(servSock);
 
@@ -56,7 +50,7 @@ unsigned long long int awaitDecrypt() {
 }
 
 int main(int argv, char **argc) {
-    unsigned long long int message = awaitDecrypt();
-    printf("Message out: %lld\n", message);
+    uint64_t message = awaitDecrypt();
+    printf("Message out: %lld\n", (unsigned long long int)message);
     return 0;
 } 
